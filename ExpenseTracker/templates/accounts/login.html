@@ -7,9 +7,9 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">Register</div>
+                        <div class="card-header">Log In</div>
                         <div class="card-body">
-                            <form name="my-form" action="{% url 'register' %}" method="post">
+                            <form name="my-form" action="{% url 'login' %}" method="post">
                                 {% csrf_token %}
                                     {% include 'common/messages.html' %}
                                     <div class="form-group row">
@@ -22,20 +22,6 @@
                                                 name="username"
                                                 placeholder="Username"
                                                 value="{{fieldValues.username}}"
-                                            >
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
-                                        <div class="col-md-6">
-                                            <input 
-                                                type="email" 
-                                                id="emailField" 
-                                                placeholder="Email"
-                                                class="form-control" 
-                                                name="email"
-                                                value="{{fieldValues.email}}"
                                             >
                                         </div>
                                     </div>
@@ -54,7 +40,7 @@
                                     </div>
 
                                     <div class="col-md-6 offset-md-4">
-                                        <input type="submit" value="Register" class="btn btn-block btn-primary" />
+                                        <input type="submit" value="Login" class="btn btn-block btn-primary" />
                                     </div>
                                 </form>
                         </div>
