@@ -37,7 +37,7 @@ jobs:
         uses: actions/cache@v2 # for more info checkout pip section documentation at https://github.com/actions/cache
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/ExpenseTracker/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
       - name: Setup python environment # setting python environment to 3.x
