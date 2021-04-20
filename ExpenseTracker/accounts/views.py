@@ -5,11 +5,14 @@ from django.core.mail import EmailMessage
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
+from django.utils.encoding import force_bytes, force_text
+# from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
 from django.urls import reverse
 from .utils import token_generator
 from django.contrib import auth
 # Create your views here.
+
+
 class RegistrationView(View):
     def get(self, request):
         return render(request, 'accounts/register.html')
@@ -40,10 +43,10 @@ class RegistrationView(View):
 
                 uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
                 domain = get_current_site(request).domain
-                link = reverse('activate', kwargs={'uidb64':uidb64, 'token': token_generator.make_token(user)})
+                link = reverse('activate', kwargs={'uidb64': uidb64, 'token': token_generator.make_token(user)})
                 activate_url = 'http://'+domain+link
                 EmailSub = 'Activate your ExpenseTracker account'
-                EmailBody = 'Hi '+user.username+ " Please use this link to verify your account\n" + activate_url
+                EmailBody = 'Hi ' + user.username + " Please use this link to verify your account\n" + activate_url
                 email_temp = EmailMessage(
                     EmailSub,
                     EmailBody,
@@ -58,6 +61,7 @@ class RegistrationView(View):
                 return render(request, 'accounts/register.html')
         messages.warning(request, 'This username is already registered')
         return render(request, 'accounts/register.html')
+
 
 class VerificationView(View):
     def get(self, request, uidb64, token):
@@ -76,10 +80,11 @@ class VerificationView(View):
             messages.success(request, 'Account activated successfully')
             return redirect('login')
 
-        except Exception as ex:
+        except Exception as ex:  # noqa: F841
             pass
 
         return redirect('login')
+
 
 class LoginView(View):
     def get(self, request):
@@ -91,23 +96,24 @@ class LoginView(View):
 
         if username and password:
             try:
-                    user = User.objects.get(username=username)
-            except:
-                    user = None
+                user = User.objects.get(username=username)
+            except:  # noqa: E722
+                user = None
             if user:
                 if user.is_active:
                     auth.login(request, user)
-                    #messages.success(request, "Welcome, "+user.username+" you are now logged in")
+                    # messages.success(request, "Welcome, "+user.username+" you are now logged in")
                     return redirect('main')
-                
+
                 messages.warning(request, "Account is not active, Please check your email")
                 return render(request, 'accounts/login.html')
-            
+
             messages.warning(request, "Invalid credentials, try again")
             return render(request, 'accounts/login.html')
-        
+
         messages.warning(request, "Please fill all fields")
         return render(request, 'accounts/login.html')
+
 
 class LogoutView(View):
     def post(self, request):

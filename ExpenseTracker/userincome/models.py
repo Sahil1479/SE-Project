@@ -14,7 +14,7 @@ class UserIncome(models.Model):
         return self.source
 
     class Meta:
-        ordering: ['-date']
+        ordering: ['-date']  # noqa: F821
 
 
 class Source(models.Model):
