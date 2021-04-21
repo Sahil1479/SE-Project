@@ -22,7 +22,7 @@ def search_income(request):
 
 @login_required(login_url='/auth/login')
 def index(request):
-    categories = Source.objects.all()
+    '''categories = Source.objects.all()'''
     income = UserIncome.objects.filter(owner=request.user)
     paginator = Paginator(income, 5)
     page_number = request.GET.get('page')
