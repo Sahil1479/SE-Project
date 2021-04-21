@@ -51,6 +51,14 @@ jobs:
       - name: Check Syntax # check code formatting
         run: pycodestyle --statistics .
       - name: Run Migrations # run migrations to create table in side car db container
+        working-directory: ./ExpenseTracker
         run: python manage.py migrate
       - name: Run Test # running tests
+        working-directory: ./ExpenseTracker
         run: python manage.py test
+      - name: Coverage
+        working-directory: ./ExpenseTracker
+        run: |
+          pip install coverage
+          coverage run --source='.' manage.py test
+          bash <(curl -s https://codecov.io/bash) || echo 'Codecov failed to upload'
