@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from userincome.models import UserIncome, Source
 
+
 class TestSourceModel(TestCase):
 
     def setUp(self):
@@ -13,7 +14,7 @@ class TestSourceModel(TestCase):
         """
         data = self.data1
         self.assertTrue(isinstance(data, Source))
-    
+
     def test_source_model_entry_return(self):
         """
         Test Source model default name
@@ -35,4 +36,3 @@ class TestUserIncomeModel(TestCase):
         data = self.data1
         self.assertTrue(isinstance(data, UserIncome))
         self.assertEqual(str(data), 'django')
-        
