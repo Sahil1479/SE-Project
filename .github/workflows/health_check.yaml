@@ -45,7 +45,6 @@ jobs:
       - name: Check Python version # checking the python version to see if 3.x is installed.
         run: python --version
       - name: Setup environment variables
-<<<<<<< HEAD
         env: # environment variables
          SECRET_KEY: ${{secrets.SECRET_KEY}}
          DEBUG: ${{secrets.DEBUG}}
@@ -53,12 +52,6 @@ jobs:
          EMAIL_HOST_PASSWORD: password
          DEFAULT_FROM_EMAIL: noreply@localhost.com
          EMAIL_HOST: ${{secrets.EMAIL_HOST}}
-=======
-        run: |
-          cp .env.example .env
-          source .env
-          export DJANGO_SETTINGS_MODULE=ExpenseTracker.settings
->>>>>>> d9c6c57efc057750bb8ca4767b88d4c48fbe0d91
       - name: Install requirements # install application requirements
         run: pip install -r requirements.txt
       - name: Check Syntax # check code formatting
