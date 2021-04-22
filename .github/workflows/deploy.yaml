@@ -4,7 +4,7 @@ name: Deployment
 on:
   # any code pushed to master branch will trigger workflow
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   Deploy: # deploy job for deploying code to heroku
