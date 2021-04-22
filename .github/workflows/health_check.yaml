@@ -50,8 +50,8 @@ jobs:
          DEBUG: ${{secrets.DEBUG}}
          EMAIL_HOST_USER: noreply@localhost.com
          EMAIL_HOST_PASSWORD: password
-         DEFAULT_FROM_EMAIL: noreply@localhost.com
          EMAIL_HOST: ${{secrets.EMAIL_HOST}}
+         DEFAULT_FROM_EMAIL: noreply@localhost.com
       - name: Install requirements # install application requirements
         run: pip install -r requirements.txt
       - name: Check Syntax # check code formatting
