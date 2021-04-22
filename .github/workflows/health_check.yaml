@@ -45,7 +45,14 @@ jobs:
       - name: Check Python version # checking the python version to see if 3.x is installed.
         run: python --version
       - name: Setup environment variables
-        run: echo "env setup"
+        run: |
+          cp .env.example .env
+          export DJANGO_SETTINGS_MODULE=ExpenseTracker.settings
+      - name: Install requirements # install application requirements
+        run: pip install -r requirements.txt
+      - name: Check Syntax # check code formatting
+        run: pycodestyle --statistics .
+      - name: Run Migrations # run migrations to create table in side car db container
         env: # environment variables
          SECRET_KEY: ${{secrets.SECRET_KEY}}
          DEBUG: ${{secrets.DEBUG}}
@@ -53,11 +60,6 @@ jobs:
          EMAIL_HOST_PASSWORD: password
          EMAIL_HOST: ${{secrets.EMAIL_HOST}}
          DEFAULT_FROM_EMAIL: noreply@localhost.com
-      - name: Install requirements # install application requirements
-        run: pip install -r requirements.txt
-      - name: Check Syntax # check code formatting
-        run: pycodestyle --statistics .
-      - name: Run Migrations # run migrations to create table in side car db container
         run: python manage.py migrate
       - name: Run Test # running tests
         run: python manage.py test # to run all the tests in the projects at once
