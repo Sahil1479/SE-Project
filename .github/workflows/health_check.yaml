@@ -14,6 +14,16 @@ on:
       - phase1
       - development
 
+# environment variables
+env:
+  SECRET_KEY: ${{secrets.SECRET_KEY}}
+  DEBUG: ${{secrets.DEBUG}}
+  EMAIL_HOST_USER: noreply@localhost.com
+  EMAIL_HOST_PASSWORD: password
+  EMAIL_HOST: ${{secrets.EMAIL_HOST}}
+  DEFAULT_FROM_EMAIL: noreply@localhost.com
+
+# jobs
 jobs:
   health-check-job: # health check job for testing and code formatting check
     runs-on: ubuntu-latest # os for running the job
@@ -53,13 +63,6 @@ jobs:
       - name: Check Syntax # check code formatting
         run: pycodestyle --statistics .
       - name: Run Migrations # run migrations to create table in side car db container
-        env: # environment variables
-         SECRET_KEY: ${{secrets.SECRET_KEY}}
-         DEBUG: ${{secrets.DEBUG}}
-         EMAIL_HOST_USER: noreply@localhost.com
-         EMAIL_HOST_PASSWORD: password
-         EMAIL_HOST: ${{secrets.EMAIL_HOST}}
-         DEFAULT_FROM_EMAIL: noreply@localhost.com
         run: python manage.py migrate
       - name: Run Test # running tests
         run: python manage.py test # to run all the tests in the projects at once
