@@ -45,6 +45,7 @@ jobs:
       - name: Check Python version # checking the python version to see if 3.x is installed.
         run: python --version
       - name: Setup environment variables
+        run: echo "env setup"
         env: # environment variables
          SECRET_KEY: ${{secrets.SECRET_KEY}}
          DEBUG: ${{secrets.DEBUG}}
