@@ -9,7 +9,7 @@ verify_ssl = true
 django = "*"
 validate-email = "*"
 six = "*"
-psycopg2 = "==2.7.7"
+psycopg2 = "==2.8.4"
 psycopg2-binary = "*"
 pycodestyle = "*"
 gunicorn = "*"

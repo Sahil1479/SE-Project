@@ -1,21 +1,19 @@
 # name of our workflow
-name: Django CI/CD Workflow
+name: CI/CD Workflow
 
 # triggers for our workflow
 on:
-  # opening a pull request to master and develop branch will be a trigger
+  # opening a pull request to phase1 and development branch will be a trigger
   pull_request:
     branches:
+      - development
       - phase1
-      - master
-  # any code pushed to master and develop branch will also be a trigger
+  # any code pushed to phase1 and development branch will also be a trigger
   push:
     branches:
-      - master
       - phase1
+      - development
 
-
-# three job definition
 jobs:
   health-check-job: # health check job for testing and code formatting check
     runs-on: ubuntu-latest # os for running the job
@@ -51,14 +49,11 @@ jobs:
       - name: Check Syntax # check code formatting
         run: pycodestyle --statistics .
       - name: Run Migrations # run migrations to create table in side car db container
-        working-directory: ./ExpenseTracker
         run: python manage.py migrate
       - name: Run Test # running tests
-        working-directory: ./ExpenseTracker
-        run: python manage.py test
-      - name: Coverage
-        working-directory: ./ExpenseTracker
-        run: |
+        run: python manage.py test # to run all the tests in the projects at once
+      - name: Coverage # to compute percentage of code which is covered by automated tests 
+        run: | 
           pip install coverage
           coverage run --source='.' manage.py test
           bash <(curl -s https://codecov.io/bash) || echo 'Codecov failed to upload'
