@@ -47,6 +47,7 @@ jobs:
       - name: Setup environment variables
         run: |
           cp .env.example .env
+          source .env
           export DJANGO_SETTINGS_MODULE=ExpenseTracker.settings
       - name: Install requirements # install application requirements
         run: pip install -r requirements.txt
