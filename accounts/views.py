@@ -34,7 +34,7 @@ class RegistrationView(View):
             if not User.objects.filter(email=email).exists():
                 if len(password) < 6:
                     messages.warning(request, 'Password too short')
-                    return render(request, 'accounts/register.html', context)
+                    return render(request, 'accounts/register.html', context, status=302)
 
                 user = User.objects.create_user(username=username, email=email)
                 user.set_password(password)
@@ -58,9 +58,9 @@ class RegistrationView(View):
                 return render(request, 'accounts/register.html')
             else:
                 messages.warning(request, 'Email address is already registered')
-                return render(request, 'accounts/register.html')
+                return render(request, 'accounts/register.html', status=409)
         messages.warning(request, 'This username is already registered')
-        return render(request, 'accounts/register.html')
+        return render(request, 'accounts/register.html', status=409)
 
 
 class VerificationView(View):
@@ -106,13 +106,13 @@ class LoginView(View):
                     return redirect('main')
 
                 messages.warning(request, "Account is not active, Please check your email")
-                return render(request, 'accounts/login.html')
+                return render(request, 'accounts/login.html', status=302)
 
             messages.warning(request, "Invalid credentials, try again")
             return render(request, 'accounts/login.html')
 
         messages.warning(request, "Please fill all fields")
-        return render(request, 'accounts/login.html')
+        return render(request, 'accounts/login.html', status=302)
 
 
 class LogoutView(View):
