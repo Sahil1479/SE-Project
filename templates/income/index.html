@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
 <div class="container mt-4">
   <div class="row">
@@ -18,7 +17,11 @@
     </div>
 
     <div class="col-md-2">
-      <a href="{% url 'add-income'%}" class="btn btn-primary">Add Income</a>
+      <a href="/income/add-income" style="align-items: center;justify-content: center;display: flex;white-space: pre; padding: 10px;" class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+      </svg> Add income</a>
     </div>
 </div>
 
@@ -30,7 +33,6 @@
 <div class="row">
       <div class="col-md-8"></div>
       <div class="col-md-4">
-
         <div class="form-group">
           <input type="text" class="form-control" id="searchField" placeholder="Search">
         </div>
@@ -41,9 +43,9 @@
   <table class="table table-stripped table-hover">
     <thead>
       <tr>
+        <th></th>
         <th>Amount</th>
         <th>Source</th>
-        <th>Description</th>
         <th>Date</th>
         <th></th>
       </tr>
@@ -52,20 +54,88 @@
     <tbody>
       {% for income in page_obj%}
       <tr>
+        <td width="20px" height="20px">
+        <div style="border-radius: 50%; padding: 5px; background: #00000013" onMouseOver="this.style.background='#f8f9fa'"
+        onMouseOut="this.style.background='#00000013'">
+          <svg data-toggle="modal" data-target="#description{{income.id}}" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        </div> 
+        </td>
         <td>{{income.amount}}</td>
         <td>{{income.source}}</td>
-        <td>{{income.description}}</td>
         <td>{{income.date}}</td>
-
         <td>
-          <a
+          <div>
+            <a
             href="{% url 'income-edit' income.id  %}"
             class="btn btn-secondary btn-sm"
-            >Edit</a
-          >
-        </td>
-      </tr>
+            >
+            <span font-size="20px">Edit</span> 
+            <svg xmlns="http://www.w3.org/2000/svg" style="margin-left: 5px" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+            </svg>
+            </a>
+            <button
+              class="btn btn-danger btn-sm"
+              type="button"
+              data-toggle="modal"
+              data-target="#delete{{income.id}}"
+            > 
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+              </svg>
+            </button>
+            <!-- Button trigger modal -->
 
+            <!-- Modal -->
+            <div class="modal fade" id=delete{{income.id}} tabindex="-1" role="dialog" aria-labelledby="delete{{income.id}}Label" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="delete{{income.id}}Label">Warning!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to permanently delete the selected item?
+                  </div>
+                  <div class="modal-footer">
+                    <a type="button" class="btn btn-primary" href="{% url 'income-delete' income.id %}">Yes</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+        
+        <!-- Modal for full description-->
+        <div class="modal fade" id="description{{income.id}}" tabindex="-1" role="dialog" aria-labelledby="description{{income.id}}Title" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="descriptionexampleModalLongTitle">Income Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p><b>Amount:</b> {{income.amount}}</p>
+                <p><b>Source:</b> {{income.source}}</p>
+                <p><b>Date:</b> {{income.date}}</p>
+                <p><b>Description:</b> <br>{{income.description}}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tr>
       {% endfor %}
     </tbody>
   </table>
@@ -80,13 +150,12 @@
           <tr>
             <th>Amount</th>
             <th>Source</th>
-            <th>Description</th>
             <th>Date</th>
             <th></th>
           </tr>
         </thead>
 
-        <tbody  class="table-body">
+        <tbody class="table-body">
 
 
         </tbody>
