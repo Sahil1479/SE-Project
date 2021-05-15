@@ -2,26 +2,28 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 
+# Create your models here.
 
-class UserIncome(models.Model):
+
+class Expense(models.Model):
     amount = models.FloatField()
     date = models.DateField(default=now)
     description = models.TextField()
     owner = models.ForeignKey(to=User, on_delete=models.CASCADE)
-    source = models.CharField(max_length=266)
+    category = models.CharField(max_length=266)
 
     def __str__(self):
-        return self.source
+        return self.category
 
     class Meta:
-        ordering: ['-date']  # noqa: F821
+        ordering: ['-date']
 
 
-class Source(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=255)
 
     class Meta:
-        verbose_name_plural = 'Sources'
+        verbose_name_plural = 'Categories'
 
     def __str__(self):
         return self.name
