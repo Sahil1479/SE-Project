@@ -5,7 +5,7 @@ __pycache__/
 *$py.class
 .env
 .vscode
-script_for _test
+script_for _test.txt
 # C extensions
 *.so
 # Distribution / packaging
