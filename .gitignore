@@ -8,7 +8,6 @@ __pycache__/
 script_for _test
 # C extensions
 *.so
-staticfiles/
 # Distribution / packaging
 .Python
 build/
