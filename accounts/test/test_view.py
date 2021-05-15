@@ -143,7 +143,7 @@ class LoginView(TestCase):
 class VerificationView(TestCase):
     def test_user_ctivates_success(self):
         user = User.objects.create_user('testuser', 'test@gmail.com')
-        user.set_password('tetetebvghhhhj')
+        user.set_password('tetetebvgj')
         user.is_active = False
         user.save()
         uid = urlsafe_base64_encode(force_bytes(user.pk))
@@ -155,7 +155,7 @@ class VerificationView(TestCase):
 
     def test_user_cant_ctivates_succesfully(self):
         user = User.objects.create_user('testuser', 'test@gmail.com')
-        user.set_password('tetetebvghhhhj')
+        user.set_password('tetetebvgj')
         user.is_active = False
         user.save()
         uid = urlsafe_base64_encode(force_bytes(user.pk))

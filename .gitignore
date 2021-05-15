@@ -103,3 +103,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+db.sqlite3
+accounts/test/test_view.py
+userincome/test/test_view.py
+
