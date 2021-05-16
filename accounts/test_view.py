@@ -2,8 +2,8 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.messages import get_messages
 from django.contrib.auth.models import User
-from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from accounts.utils import token_generator
 
 
@@ -153,7 +153,7 @@ class VerificationView(TestCase):
         user = User.objects.get(email='test@gmail.com')
         self.assertTrue(user.is_active)
 
-    def test_user_cant_ctivates_succesfully(self):
+    def test_user_cant_activates_succesfully(self):
         user = User.objects.create_user('testuser', 'test@gmail.com')
         user.set_password('tetetebvghhhhj')
         user.is_active = False

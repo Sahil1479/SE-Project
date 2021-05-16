@@ -100,6 +100,7 @@ def delete_income(request, id):
         messages.success(request, 'Income removed')
     return redirect('income')
 
+
 def income_source_summary(request):
     todays_date = datetime.date.today()
     six_months_ago = todays_date-datetime.timedelta(days=30*6)
@@ -122,5 +123,7 @@ def income_source_summary(request):
             finalrep[y] = get_income_source_amount(y)
 
     return JsonResponse({'income_source_data': finalrep}, safe=False)
+
+
 def stats_view(request):
     return render(request, 'income/stats.html')
