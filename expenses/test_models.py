@@ -27,8 +27,7 @@ class TestUserIncomeModel(TestCase):
 
     def setUp(self):
         self.owner = User.objects.create(username='admin')
-        self.data1 = Expense.objects.create(amount=1, description='test description',
-                                            owner=self.owner, category="django")
+        self.data1 = Expense.objects.create(amount=1, description='test description', owner=self.owner, category="django")
 
     def test_source_model_entry(self):
         """
