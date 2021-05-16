@@ -3,9 +3,11 @@ from django.contrib.auth.decorators import login_required
 from .models import Category, Expense
 # Create your views here.
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 import json
 from django.http import JsonResponse
+# from userpreferences.models import UserPreference
 import datetime
 
 
@@ -23,13 +25,16 @@ def search_expenses(request):
 
 @login_required(login_url='/auth/login')
 def index(request):
+    categories = Category.objects.all()
     expenses = Expense.objects.filter(owner=request.user)
     paginator = Paginator(expenses, 5)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
+    # currency = UserPreference.objects.get(user=request.user).currency
     context = {
         'expenses': expenses,
         'page_obj': page_obj,
+        # 'currency': currency
     }
     return render(request, 'expenses/index.html', context)
 
@@ -101,7 +106,7 @@ def expense_edit(request, id):
 
 def delete_expense(request, id):
     expense = Expense.objects.get(pk=id)
-    if expense.owner == request.user:
+    if expense.owner == requested_user:
         expense.delete()
         messages.success(request, 'Expense removed')
     return redirect('expenses')
