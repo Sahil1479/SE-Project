@@ -31,7 +31,7 @@ class TestExpense(TestCase):
                      description="Hello World",
                      date=datetime.date.today(),
                      category='RENT',
-                     owner=User.objects.first())
+                     owner=self.user)
         ex.save()
 
     def test_show_expense_page_if_no_auth(self):

@@ -160,7 +160,7 @@ class VerificationView(TestCase):
         user.save()
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = token_generator.make_token(user)
-        response = self.client.get(reverse('activate', kwargs={'uidb64': uid, 'token': token}))
+        response = self.client.get(reverse('activate', kwargs={'uidb64': 'uid', 'token': 'token'}))
         self.assertEqual(response.status_code, 302)
         user = User.objects.get(email='test@gmail.com')
         self.assertFalse(user.is_active)
