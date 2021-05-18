@@ -5,7 +5,6 @@ __pycache__/
 *$py.class
 .env
 .vscode
-staticfiles
 script_for _test
 # C extensions
 *.so
