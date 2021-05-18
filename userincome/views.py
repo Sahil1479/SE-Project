@@ -23,7 +23,7 @@ def search_income(request):
 
 @login_required(login_url='/auth/login')
 def index(request):
-    '''categories = Source.objects.all()'''
+    souces = Source.objects.all()
     income = UserIncome.objects.filter(owner=request.user).order_by('-id')
     paginator = Paginator(income, 7)
     page_number = request.GET.get('page')
@@ -37,9 +37,9 @@ def index(request):
 
 @login_required(login_url='/auth/login')
 def add_income(request):
-    sources = Source.objects.all()
+    source = Source.objects.all()
     context = {
-        'sources': sources,
+        'sources': source,
         'values': request.POST
     }
     if request.method == 'GET':
