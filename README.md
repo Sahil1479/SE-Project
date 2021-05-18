@@ -23,6 +23,10 @@ Procedure:
     ```
     pipenv shell
     ```
+- Create environment variables
+    ```
+    copy .env.example .env
+    ```
 - Make database migrations
     ```
     python manage.py makemigrations
