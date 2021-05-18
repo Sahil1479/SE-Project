@@ -118,33 +118,33 @@ class TestExpense(TestCase):
         self.assertEqual(updated_expense[0].category, 'RENT')
         self.assertEqual(updated_expense[0].date, datetime.date.today())
 
-    # def test_delete_own_expense(self):
-    #     self.client.login(username='sahil', password='password123')
-    #     self.create_expense()
-    #     expense_obj = Expense.objects.filter(owner=self.user).order_by('-id')
+    def test_delete_own_expense(self):
+        self.client.login(username='sahil', password='password123')
+        self.create_expense()
+        expense_obj = Expense.objects.filter(owner=self.user).order_by('-id')
 
-    #     response = self.client.get(
-    #         reverse('expense-delete', kwargs={'id': expense_obj[0].id}),
-    #         format='json')
-    #     expense_obj_after_delete = Expense.objects.filter(owner=self.user).order_by('-id')
+        response = self.client.get(
+            reverse('expense-delete', kwargs={'id': expense_obj[0].id}),
+            format='json')
+        expense_obj_after_delete = Expense.objects.filter(owner=self.user).order_by('-id')
 
-    #     self.assertEqual(0, len(expense_obj_after_delete))
-    #     self.assertEqual(response.status_code, 302)
-    #     self.assertRedirects(response, '/expenses/')
+        self.assertEqual(0, len(expense_obj_after_delete))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/expenses/')
 
-    # def test_delete_others_expense(self):
-    #     self.client.login(username='sahil2', password='password1234')
-    #     self.create_expense()
-    #     expense_obj = Expense.objects.filter(owner=self.user).order_by('-id')
+    def test_delete_others_expense(self):
+        self.client.login(username='sahil2', password='password1234')
+        self.create_expense()
+        expense_obj = Expense.objects.filter(owner=self.user).order_by('-id')
 
-    #     response = self.client.get(
-    #         reverse('expense-delete', kwargs={'id': expense_obj[0].id}),
-    #         format='json')
-    #     expense_obj_after_delete = Expense.objects.filter(owner=self.user).order_by('-id')
+        response = self.client.get(
+            reverse('expense-delete', kwargs={'id': expense_obj[0].id}),
+            format='json')
+        expense_obj_after_delete = Expense.objects.filter(owner=self.user).order_by('-id')
 
-    #     self.assertEqual(1, len(expense_obj_after_delete))
-    #     self.assertEqual(response.status_code, 302)
-    #     self.assertRedirects(response, '/expenses/')
+        self.assertEqual(1, len(expense_obj_after_delete))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/expenses/')
 
     def test_should_not_create_expense_with_an_inactive_account(self):
         user = self.user
